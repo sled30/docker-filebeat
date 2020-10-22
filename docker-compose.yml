@@ -1,9 +1,16 @@
-filebeat:
-  image: bargenson/filebeat:latest
-  restart: unless-stopped
-  volumes:
-   - /var/run/docker.sock:/tmp/docker.sock
-  environment:
-   - LOGSTASH_HOST=logstash.localdomain
-   - LOGSTASH_PORT=5044
-   - SHIPPER_NAME=aWonderfulName
+version: '3.6'
+services:
+  filebeat:
+    build:
+      context: ./
+#  image: bargenson/filebeat:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker:/var/lib/docker
+    environment:
+      - LOGSTASH_HOST=172.16.2.9
+      - LOGSTASH_PORT=5000
+ # options:
+   #       gelf-address: "udp://172.16.2.9:12201"
+#   - SHIPPER_NAME=aWonderfulName
